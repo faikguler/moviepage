@@ -1,0 +1,46 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Movie Data</title>
+</head>
+<body>
+  <div id="movies"></div>
+
+  <script src="movies.js"></script>
+  <script>
+    const moviesContainer = document.getElementById("movies");
+
+    // Render the movie data onto the webpage
+    function renderMovies() {
+      let moviesHTML = "";
+      for (const movieTitle in movieData) {
+        const movie = movieData[movieTitle];
+        const movieHTML = `
+          <h2>${movieTitle} (${movie.year})</h2>
+          <p>Plot: ${movie.plot}</p>
+          <p>Cast: ${movie.cast.join(", ")}</p>
+          <p>Runtime: ${movie.runtime} minutes</p>
+          <p>Rating: ${movie.rating}</p>
+          <hr>
+        `;
+        moviesHTML += movieHTML;
+      }
+      moviesContainer.innerHTML = moviesHTML;
+    }
+
+    renderMovies();
+
+    // Allow the user to update the movie data
+    function updateMovieData(movieTitle, property, value) {
+      if (movieData.hasOwnProperty(movieTitle) && movieData[movieTitle].hasOwnProperty(property)) {
+        movieData[movieTitle][property] = value;
+        renderMovies();
+      }
+    }
+
+    // Example: Update the rating of "The Royal Tenenbaums" to 8.0
+    updateMovieData("The Royal Tenenbaums", "rating", 8.0);
+  </script>
+</body>
+</html>
